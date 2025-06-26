@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO;
+import com.devsuperior.dsmeta.dto.SummaryDTO;
 import com.devsuperior.dsmeta.entities.Sale;
 import com.devsuperior.dsmeta.projections.SaleWithSellerNameProjection;
+import com.devsuperior.dsmeta.projections.SummaryProjection;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
 
 @Service
@@ -43,6 +45,17 @@ public class SaleService {
 		    }
 
 		    Page<SaleWithSellerNameDTO> result = list.map(SaleWithSellerNameDTO::new);
+		    return result;
+	}
+	
+	public Page<SummaryDTO> sumary(String minDateString, String maxDateString, Pageable pageable){
+		
+		LocalDate maxDate = returnMaxDate(maxDateString);
+		LocalDate minDate = returnMinDate(minDateString);
+		
+		 Page<SummaryProjection> list = repository.sumary(minDate, maxDate, pageable);
+
+		    Page<SummaryDTO> result = list.map(SummaryDTO::new);
 		    return result;
 	}
 	

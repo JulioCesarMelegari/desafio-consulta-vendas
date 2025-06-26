@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO;
+import com.devsuperior.dsmeta.dto.SummaryDTO;
 import com.devsuperior.dsmeta.services.SaleService;
 
 @RestController
@@ -26,13 +27,6 @@ public class SaleController {
 		SaleMinDTO dto = service.findById(id);
 		return ResponseEntity.ok(dto);
 	}
-/*
-	@GetMapping(value = "/report")
-	public ResponseEntity<Page<SaleWithSellerNameDTO>> getReport(@RequestParam String name, String minDateString, String maxDateString, Pageable pageable) {
-		Page<SaleWithSellerNameDTO> list = service.search(name, minDateString, maxDateString, pageable);
-		return ResponseEntity.ok(list);
-	}
-	*/
 	
 	@GetMapping(value = "/report")
 	public ResponseEntity<Page<SaleWithSellerNameDTO>> getReport(@RequestParam(required = false) String name, @RequestParam(required = false) String minDate, 
@@ -41,10 +35,9 @@ public class SaleController {
 	    return ResponseEntity.ok(list);
 	}
 
-
 	@GetMapping(value = "/summary")
-	public ResponseEntity<?> getSummary() {
-		// TODO
-		return null;
+	public ResponseEntity<Page<SummaryDTO>> getSummary(@RequestParam(required = false) String minDate, @RequestParam(required = false) String maxDate, Pageable pageable) {
+		Page<SummaryDTO> list = service.sumary(minDate, maxDate, pageable);
+	    return ResponseEntity.ok(list);
 	}
 }
